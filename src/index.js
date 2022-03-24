@@ -1,4 +1,5 @@
 // @ts-check
+import init from "./app/index.jsx"
 
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
@@ -29,3 +30,5 @@ const container = document.querySelector('#chat');
 container.append(card);
 
 console.log('it works!');
+
+init()
