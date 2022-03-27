@@ -26,6 +26,12 @@ settings:
     - webpack
 
 rules:
+  jsx-a11y/label-has-associated-control:
+    - error
+    - required:
+        some:
+          - nesting
+          - id
   import/extensions: 0
   react/prop-types: 0
   no-console: 0
