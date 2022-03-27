@@ -1,29 +1,29 @@
 import React from 'react';
 import {
-    BrowserRouter,
-    Routes,
-    Route
-} from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Login from "./components/Login";
-import Slack from "./components/Slack";
-import NotFound from "./components/NotFound";
+  BrowserRouter,
+  Routes,
+  Route,
+} from 'react-router-dom';
+import Navbar from './components/Navbar.jsx';
+import Login from './components/Login.jsx';
+import Slack from './components/Slack.jsx';
+import NotFound from './components/NotFound.jsx';
 
-const App = () => {
-    return (
-        <div className="d-flex flex-column h-100">
+function App() {
+  return (
+    <div className="d-flex flex-column h-100">
 
-            <Navbar/>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/login" element={<Login/>} />
-                    <Route path="/" element={<Slack/>} />
-                    <Route path="*" element={<NotFound/>} />
-                </Routes>
-            </BrowserRouter>
+      <Navbar />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Slack />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
 
-        </div>
-    );
-};
+    </div>
+  );
+}
 
 export default App;
