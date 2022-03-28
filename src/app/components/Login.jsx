@@ -1,18 +1,13 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import axios from 'axios';
 import image from '../assets/loginImg.jpeg';
 
 function Login() {
   const LoginSchema = Yup.object().shape({
-    username: Yup.string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('Required'),
-    password: Yup.string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('Required'),
+    username: Yup.string().required('Обязательное поле'),
+    password: Yup.string().required('Обязательное поле'),
   });
 
   const formik = useFormik({
@@ -21,8 +16,14 @@ function Login() {
       password: '',
     },
     validationSchema: LoginSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2)); // eslint-disable-line no-alert
+    onSubmit: async (values, { setFieldError }) => {
+      try {
+        const response = axios.post('/api/v1/login', values);
+        console.log((await response).data);
+      } catch {
+        setFieldError('username', 'submit');
+        setFieldError('password', 'Неверные имя пользователя или пароль');
+      }
     },
   });
 
@@ -48,7 +49,11 @@ function Login() {
                     onChange={formik.handleChange}
                   />
                   <label htmlFor="username">Ваш ник</label>
-                  {formik.errors.username ? <div className="invalid-tooltip">{formik.errors.username}</div> : null}
+                  {formik.errors.username // eslint-disable-line no-nested-ternary
+                    ? formik.errors.username === 'submit'
+                      ? null
+                      : <div className="invalid-tooltip">{formik.errors.username}</div>
+                    : null}
                 </div>
                 <div className="form-floating mb-4">
                   <input
@@ -57,12 +62,14 @@ function Login() {
                     required
                     placeholder="Пароль"
                     id="password"
-                    className={`form-control ${formik.errors.username ? 'is-invalid' : null}`}
+                    className={`form-control ${formik.errors.password ? 'is-invalid' : null}`}
                     value={formik.values.password}
                     onChange={formik.handleChange}
                   />
                   <label htmlFor="password" className="form-label">Пароль</label>
-                  {formik.errors.password ? <div className="invalid-tooltip">{formik.errors.password}</div> : null}
+                  {formik.errors.password
+                    ? <div className="invalid-tooltip">{formik.errors.password}</div>
+                    : null}
                 </div>
                 <button type="submit" className="w-100 mb-3 btn btn-outline-primary">Войти</button>
               </form>
