@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   BrowserRouter,
   Routes,
@@ -14,7 +14,13 @@ import AuthContext from './contexts';
 import useAuth from './hooks/useAuth';
 
 function AuthProvider({ children }) {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem('user'));
+
+  useEffect(() => {
+    if (localStorage.getItem('user')) {
+      setLoggedIn(true);
+    }
+  });
 
   const logIn = () => setLoggedIn(true);
   const logOut = () => {
@@ -39,6 +45,15 @@ function PrivateRoute({ children }) {
   );
 }
 
+function PublicRoute({ children }) {
+  const auth = useAuth();
+  const location = useLocation();
+
+  return (
+    !auth.loggedIn ? children : <Navigate to="/" state={{ from: location }} />
+  );
+}
+
 function App() {
   return (
     <AuthProvider>
@@ -48,12 +63,8 @@ function App() {
 
           <Navbar />
           <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route
-              path="/"
-              element={(
-                <PrivateRoute><Slack /></PrivateRoute>)}
-            />
+            <Route exact path="/" element={<PrivateRoute><Slack /></PrivateRoute>} />
+            <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
 
