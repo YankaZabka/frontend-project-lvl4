@@ -2,9 +2,14 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 import image from '../assets/loginImg.jpeg';
+import useAuth from '../hooks/useAuth';
 
 function Login() {
+  const auth = useAuth();
+  const navigate = useNavigate();
+
   const LoginSchema = Yup.object().shape({
     username: Yup.string().required('Обязательное поле'),
     password: Yup.string().required('Обязательное поле'),
@@ -19,7 +24,9 @@ function Login() {
     onSubmit: async (values, { setFieldError }) => {
       try {
         const response = axios.post('/api/v1/login', values);
-        console.log((await response).data);
+        localStorage.setItem('user', JSON.stringify((await response).data));
+        auth.logIn();
+        navigate('/', { replace: true });
       } catch {
         setFieldError('username', 'submit');
         setFieldError('password', 'Неверные имя пользователя или пароль');
@@ -77,7 +84,7 @@ function Login() {
             <div className="card-footer p-4">
               <div className="text-center">
                 <span>Нет аккаунта? </span>
-                <a href="/signup">Регистрация</a>
+                <Link to="/signup">Регистрация</Link>
               </div>
             </div>
           </div>
