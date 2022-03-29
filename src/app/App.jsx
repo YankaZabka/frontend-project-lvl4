@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   BrowserRouter,
   Routes,
@@ -18,7 +18,7 @@ function AuthProvider({ children }) {
 
   const logIn = () => setLoggedIn(true);
   const logOut = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     setLoggedIn(false);
   };
 
