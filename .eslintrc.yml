@@ -33,6 +33,7 @@ rules:
           - nesting
           - id
   import/extensions: 0
+
   react/prop-types: 0
   no-console: 0
   functional/no-conditional-statement: 0
@@ -41,3 +42,4 @@ rules:
   functional/functional-parameters: 0
   functional/no-try-statement: 0
   functional/no-throw-statement: 0
+  no-param-reassign: 0
