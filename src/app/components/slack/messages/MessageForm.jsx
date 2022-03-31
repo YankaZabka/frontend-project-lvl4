@@ -10,7 +10,6 @@ function MessageForm() {
             aria-label="Новое сообщение"
             placeholder="Введите сообщение..."
             className="border-0 p-0 ps-2 form-control"
-            value=""
           />
           <button type="submit" disabled="" className="btn btn-group-vertical">
             <svg
