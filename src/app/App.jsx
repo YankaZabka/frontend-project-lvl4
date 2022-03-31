@@ -1,5 +1,7 @@
 import React from 'react';
-import {BrowserRouter, Navigate, Route, Routes, useLocation,} from 'react-router-dom';
+import {
+  BrowserRouter, Navigate, Route, Routes, useLocation,
+} from 'react-router-dom';
 import Navbar from './components/Navbar.jsx';
 import Login from './components/Login.jsx';
 import Slack from './components/slack/Slack.jsx';
@@ -28,23 +30,23 @@ function PublicRoute({ children }) {
 
 function App() {
   return (
-      <SocketProvider>
-        <AuthProvider>
-          <BrowserRouter>
+    <SocketProvider>
+      <AuthProvider>
+        <BrowserRouter>
 
-            <div className="d-flex flex-column h-100">
+          <div className="d-flex flex-column h-100">
 
-              <Navbar />
-              <Routes>
-                <Route exact path="/" element={<PrivateRoute><Slack /></PrivateRoute>} />
-                <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
+            <Navbar />
+            <Routes>
+              <Route exact path="/" element={<PrivateRoute><Slack /></PrivateRoute>} />
+              <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
 
-            </div>
-          </BrowserRouter>
-        </AuthProvider>
-      </SocketProvider>
+          </div>
+        </BrowserRouter>
+      </AuthProvider>
+    </SocketProvider>
   );
 }
 
