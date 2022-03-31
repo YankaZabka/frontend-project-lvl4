@@ -1,25 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-  value: 0,
-};
+const initialState = {};
 
 const counterSlice = createSlice({
   name: 'channels',
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
-    },
-    decrement: (state) => {
-      state.value -= 1;
-    },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload;
-    },
+    fetchChannelsData: (state, action) => {
+      state.data = action.payload.channels;
+      state.currentChannelId = action.payload.currentChannelId;
+    }
   },
 });
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+export const { fetchChannelsData } = counterSlice.actions;
 
 export default counterSlice.reducer;
