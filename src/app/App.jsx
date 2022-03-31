@@ -1,40 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  useLocation,
-} from 'react-router-dom';
+import React from 'react';
+import {BrowserRouter, Navigate, Route, Routes, useLocation,} from 'react-router-dom';
 import Navbar from './components/Navbar.jsx';
 import Login from './components/Login.jsx';
 import Slack from './components/slack/Slack.jsx';
 import NotFound from './components/NotFound.jsx';
-import AuthContext from './contexts';
+import AuthProvider from './contexts/providers/authProvider.jsx';
+import SocketProvider from './contexts/providers/socketProvider.jsx';
 import useAuth from './hooks/useAuth';
-
-function AuthProvider({ children }) {
-  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem('user'));
-
-  useEffect(() => {
-    if (localStorage.getItem('user')) {
-      setLoggedIn(true);
-    }
-  });
-
-  const logIn = () => setLoggedIn(true);
-  const logOut = () => {
-    localStorage.removeItem('user');
-    setLoggedIn(false);
-  };
-
-  return (
-  // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <AuthContext.Provider value={{ loggedIn, logIn, logOut }}>
-      {children}
-    </AuthContext.Provider>
-  );
-}
 
 function PrivateRoute({ children }) {
   const auth = useAuth();
@@ -56,21 +28,23 @@ function PublicRoute({ children }) {
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
+      <SocketProvider>
+        <AuthProvider>
+          <BrowserRouter>
 
-        <div className="d-flex flex-column h-100">
+            <div className="d-flex flex-column h-100">
 
-          <Navbar />
-          <Routes>
-            <Route exact path="/" element={<PrivateRoute><Slack /></PrivateRoute>} />
-            <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+              <Navbar />
+              <Routes>
+                <Route exact path="/" element={<PrivateRoute><Slack /></PrivateRoute>} />
+                <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
 
-        </div>
-      </BrowserRouter>
-    </AuthProvider>
+            </div>
+          </BrowserRouter>
+        </AuthProvider>
+      </SocketProvider>
   );
 }
 
