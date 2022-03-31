@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 import Navbar from './components/Navbar.jsx';
 import Login from './components/Login.jsx';
-import Slack from './components/Slack.jsx';
+import Slack from './components/slack/Slack.jsx';
 import NotFound from './components/NotFound.jsx';
 import AuthContext from './contexts';
 import useAuth from './hooks/useAuth';
