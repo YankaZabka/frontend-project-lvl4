@@ -9,7 +9,7 @@ const counterSlice = createSlice({
     fetchChannelsData: (state, action) => {
       state.data = action.payload.channels;
       state.currentChannelId = action.payload.currentChannelId;
-    }
+    },
   },
 });
 

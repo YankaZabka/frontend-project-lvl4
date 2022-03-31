@@ -1,14 +1,14 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
+import { batch, useDispatch } from 'react-redux';
 import ChannelsList from './channels/ChannelsList.jsx';
 import MessagesList from './messages/MessagesList.jsx';
 import SlackContainer from './SlackContainer.jsx';
-import {fetchMessage} from '../../slices/messagesSlice.js'
-import {fetchChannelsData} from '../../slices/channelsSlice.js'
-import {batch, useDispatch} from "react-redux";
+import { fetchMessage } from '../../slices/messagesSlice.js';
+import { fetchChannelsData } from '../../slices/channelsSlice.js';
 
 function Slack() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const userInfo = localStorage.getItem('user');
@@ -21,11 +21,11 @@ function Slack() {
           Authorization: `Bearer ${token}`,
         },
       });
-      const {channels, currentChannelId, messages} = response.data
+      const { channels, currentChannelId, messages } = response.data;
 
       batch(() => {
         dispatch(fetchMessage(messages));
-        dispatch(fetchChannelsData({channels, currentChannelId}));
+        dispatch(fetchChannelsData({ channels, currentChannelId }));
       });
     };
 
