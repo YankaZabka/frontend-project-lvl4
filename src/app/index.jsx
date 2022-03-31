@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import App from './App.jsx';
+import store from './slices/index.js';
 
 export default () => {
   const bodyEl = document.querySelector('body');
@@ -17,5 +19,10 @@ export default () => {
   bodyEl.append(height100Element);
   height100Element.append(container);
 
-  ReactDOM.render(<App />, container);
+  ReactDOM.render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    container,
+  );
 };
