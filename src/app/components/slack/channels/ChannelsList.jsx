@@ -1,8 +1,11 @@
 import React from 'react';
 import ChannelItem from './ChannelItem.jsx';
 import ChannelsAddBtn from './ChannelsAddBtn.jsx';
+import {useSelector} from "react-redux";
 
 function ChannelsList() {
+    const channels = useSelector((state) => state.channels.data)
+
   return (
     <div className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
       <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
@@ -12,8 +15,9 @@ function ChannelsList() {
 
       <ul className="nav flex-column nav-pills nav-fill px-2">
 
-        <ChannelItem name="general" />
-        <ChannelItem name="random" />
+          {channels && channels.map(({id, name, removable}) => {
+              return <ChannelItem key={id} name={name} id={id} removable={removable}/>
+          })}
 
       </ul>
 
