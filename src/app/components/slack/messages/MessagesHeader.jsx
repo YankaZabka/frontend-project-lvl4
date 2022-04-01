@@ -5,7 +5,6 @@ import { selectors } from '../../../slices/channelsSlice.js';
 function MessagesHeader() {
   const currentChannelId = useSelector((state) => state.channels.selectedChannel);
   const currentChannel = useSelector((state) => selectors.selectById(state, currentChannelId));
-  console.log(currentChannel);
 
   return (
     <div className="bg-light mb-4 p-3 shadow-sm small">
