@@ -1,38 +1,42 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { SplitButton, Dropdown, Button } from 'react-bootstrap';
+import { changeChannel } from '../../../slices/channelsSlice';
 
 function ChannelItem({ name, id, removable }) {
   const currentId = useSelector((state) => state.channels.selectedChannel);
-  const isSelected = currentId === id ? 'btn-secondary' : '';
+  const dispatch = useDispatch();
+
+  const onClick = () => {
+    dispatch(changeChannel(id));
+  };
 
   return (
     <li className="nav-item w-100">
       {removable
         ? (
-          <div role="group" className="d-flex dropdown btn-group">
-            <button type="button" className={`w-100 rounded-0 text-start text-truncate btn ${isSelected}`}>
-              <span
-                className="me-1"
-              >
-                #
-              </span>
-              {name}
-            </button>
-            <button
-              type="button"
-              id="react-aria8038969833-1"
-              aria-expanded="false"
-              className={`flex-grow-0 dropdown-toggle dropdown-toggle-split btn ${isSelected}`}
-            >
-              <span className="visually-hidden">Управление каналом</span>
-            </button>
-          </div>
+          <SplitButton
+            variant={`${currentId === id ? 'secondary' : 'outline-secondary'}`}
+            title={`# ${name}`}
+            id="segmented-button-dropdown-1"
+            className="d-flex mb-2"
+            onClick={onClick}
+          >
+            <Dropdown.Item>Удалить</Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item>Переименовать</Dropdown.Item>
+          </SplitButton>
         )
         : (
-          <button type="button" className={`w-100 rounded-0 text-start btn ${isSelected}`}>
-            <span className="me-1">#</span>
-            {name}
-          </button>
+          <div className="d-grid gap-2">
+            <Button
+              variant={`${currentId === id ? 'secondary' : 'outline-secondary'}`}
+              className="d-flex mb-2"
+              onClick={onClick}
+            >
+              {`# ${name}`}
+            </Button>
+          </div>
         )}
     </li>
   );
