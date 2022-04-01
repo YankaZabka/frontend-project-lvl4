@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -7,6 +7,8 @@ import image from '../assets/loginImg.jpeg';
 import useAuth from '../hooks/useAuth';
 
 function Login() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const auth = useAuth();
   const navigate = useNavigate();
 
@@ -23,11 +25,14 @@ function Login() {
     validationSchema: LoginSchema,
     onSubmit: async (values, { setFieldError }) => {
       try {
-        const response = axios.post('/api/v1/login', values);
-        localStorage.setItem('user', JSON.stringify((await response).data));
+        setIsLoading(true);
+        const response = await axios.post('/api/v1/login', values);
+        localStorage.setItem('user', JSON.stringify(response.data));
+        setIsLoading(false);
         auth.logIn();
         navigate('/', { replace: true });
       } catch {
+        setIsLoading(false);
         setFieldError('username', 'submit');
         setFieldError('password', 'Неверные имя пользователя или пароль');
       }
@@ -44,7 +49,15 @@ function Login() {
                 <img src={image} alt="Войти" className="rounded-circle" />
               </div>
               <form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={formik.handleSubmit}>
-                <h1 className="text-center mb-4">Войти</h1>
+                {!isLoading
+                  ? <h1 className="text-center mb-4">Войти</h1>
+                  : (
+                    <div className="d-flex justify-content-center">
+                      <div className="spinner-grow text-primary mb-4" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                    </div>
+                  )}
                 <div className="form-floating mb-3">
                   <input
                     name="username"
@@ -78,7 +91,13 @@ function Login() {
                     ? <div className="invalid-tooltip">{formik.errors.password}</div>
                     : null}
                 </div>
-                <button type="submit" className="w-100 mb-3 btn btn-outline-primary">Войти</button>
+                <button
+                  type="submit"
+                  className="w-100 mb-3 btn btn-outline-primary"
+                  disabled={isLoading}
+                >
+                  Войти
+                </button>
               </form>
             </div>
             <div className="card-footer p-4">
