@@ -1,20 +1,20 @@
 import React from 'react';
-import {useSelector} from "react-redux";
-import {useFormik} from "formik"
-import useSocket from "../../../hooks/useSocket";
+import { useSelector } from 'react-redux';
+import { useFormik } from 'formik';
+import useSocket from '../../../hooks/useSocket';
 
 function MessageForm() {
-  const socket = useSocket()
-  const channelId = useSelector((state) => state.channels.selectedChannel)
-  const author = JSON.parse(localStorage.getItem("user")).username
+  const socket = useSocket();
+  const channelId = useSelector((state) => state.channels.selectedChannel);
+  const author = JSON.parse(localStorage.getItem('user')).username;
 
   const formik = useFormik({
     initialValues: {
       text: '',
     },
-    onSubmit: ({text}, {resetForm}) => {
-      socket.emit("newMessage", {text, channelId, author})
-      resetForm()
+    onSubmit: ({ text }, { resetForm }) => {
+      socket.emit('newMessage', { text, channelId, author });
+      resetForm();
     },
   });
 
@@ -32,7 +32,7 @@ function MessageForm() {
             value={formik.values.text}
             onChange={formik.handleChange}
           />
-          <button type="submit" disabled={formik.values.text === ""} className="btn btn-group-vertical">
+          <button type="submit" disabled={formik.values.text === ''} className="btn btn-group-vertical">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"

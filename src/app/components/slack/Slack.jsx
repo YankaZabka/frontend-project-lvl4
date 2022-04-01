@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import { batch, useDispatch } from 'react-redux';
 import ChannelsList from './channels/ChannelsList.jsx';
@@ -26,7 +26,7 @@ function Slack() {
       batch(() => {
         dispatch(fetchMessages(messages));
         dispatch(fetchChannels(channels));
-        dispatch(changeChannel(currentChannelId))
+        dispatch(changeChannel(currentChannelId));
       });
     };
 
@@ -36,7 +36,7 @@ function Slack() {
   return (
     <SlackContainer>
 
-      <ChannelsList/>
+      <ChannelsList />
       <MessagesList />
 
     </SlackContainer>

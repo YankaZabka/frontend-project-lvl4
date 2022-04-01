@@ -4,7 +4,6 @@ import ChannelItem from './ChannelItem.jsx';
 import ChannelsAddBtn from './ChannelsAddBtn.jsx';
 import { selectors } from '../../../slices/channelsSlice.js';
 
-
 function ChannelsList() {
   const channels = useSelector(selectors.selectAll);
 

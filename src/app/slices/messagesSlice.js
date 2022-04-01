@@ -1,13 +1,13 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
-const messagesAdapter = createEntityAdapter()
+const messagesAdapter = createEntityAdapter();
 
 const counterSlice = createSlice({
   name: 'messages',
   initialState: messagesAdapter.getInitialState(),
   reducers: {
     fetchMessages: messagesAdapter.setAll,
-    addMessage: messagesAdapter.addOne
+    addMessage: messagesAdapter.addOne,
   },
 });
 
