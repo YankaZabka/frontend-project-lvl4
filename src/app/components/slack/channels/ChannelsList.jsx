@@ -2,9 +2,11 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import ChannelItem from './ChannelItem.jsx';
 import ChannelsAddBtn from './ChannelsAddBtn.jsx';
+import { selectors } from '../../../slices/channelsSlice.js';
+
 
 function ChannelsList() {
-  const channels = useSelector((state) => state.channels.data);
+  const channels = useSelector(selectors.selectAll);
 
   return (
     <div className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
