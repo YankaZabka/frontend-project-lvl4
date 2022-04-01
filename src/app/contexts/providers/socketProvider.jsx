@@ -1,13 +1,17 @@
 import { io } from 'socket.io-client';
 import React from 'react';
 import SocketContext from '../socket.js';
+import {addMessage} from "../../slices/messagesSlice";
+import {useDispatch} from "react-redux";
 
 const socketProvider = ({ children }) => {
   const socket = io();
+  const dispatch = useDispatch()
 
-  // socket.on('newMessage', (msg) => {
-  //     store.dispatch(addNewMessages({ msg }));
-  // });
+  socket.on('newMessage', (msg) => {
+    console.log("msg", msg)
+      dispatch(addMessage(msg));
+  });
   // socket.on('newChannel', (channel) => {
   //     store.dispatch(addChannel({ channel }));
   // });
