@@ -5,7 +5,7 @@ import ChannelsList from './channels/ChannelsList.jsx';
 import MessagesList from './messages/MessagesList.jsx';
 import SlackContainer from './SlackContainer.jsx';
 import { fetchMessages } from '../../slices/messagesSlice.js';
-import { fetchChannelsData } from '../../slices/channelsSlice.js';
+import { fetchChannels } from '../../slices/channelsSlice.js';
 
 function Slack() {
   const [channelId, setChannelId] = useState(1)
@@ -27,7 +27,7 @@ function Slack() {
 
       batch(() => {
         dispatch(fetchMessages(messages));
-        dispatch(fetchChannelsData(channels));
+        dispatch(fetchChannels(channels));
       });
     };
 

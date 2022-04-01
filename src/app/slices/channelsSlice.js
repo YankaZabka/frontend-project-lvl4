@@ -6,11 +6,10 @@ const counterSlice = createSlice({
   name: 'channels',
   initialState: channelsAdapter.getInitialState(),
   reducers: {
-    fetchChannelsData: channelsAdapter.setAll,
-    fetchCurrentChannelId: channelsAdapter.updateOne
+    fetchChannels: channelsAdapter.setAll,
   },
 });
 
-export const { fetchChannelsData } = counterSlice.actions;
+export const { fetchChannels } = counterSlice.actions;
 
 export default counterSlice.reducer;
