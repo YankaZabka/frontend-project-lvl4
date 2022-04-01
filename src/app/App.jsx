@@ -9,6 +9,7 @@ import NotFound from './components/NotFound.jsx';
 import AuthProvider from './contexts/providers/authProvider.jsx';
 import SocketProvider from './contexts/providers/socketProvider.jsx';
 import useAuth from './hooks/useAuth';
+import 'bootstrap';
 
 function PrivateRoute({ children }) {
   const auth = useAuth();
