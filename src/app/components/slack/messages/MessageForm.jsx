@@ -1,17 +1,38 @@
 import React from 'react';
+import {useSelector} from "react-redux";
+import {useFormik} from "formik"
+import useSocket from "../../../hooks/useSocket";
 
 function MessageForm() {
+  const socket = useSocket()
+  const channelId = useSelector((state) => state.channels.selectedChannel)
+  const author = JSON.parse(localStorage.getItem("user")).username
+
+  const formik = useFormik({
+    initialValues: {
+      text: '',
+    },
+    onSubmit: ({text}, {resetForm}) => {
+      socket.emit("newMessage", {text, channelId, author})
+      resetForm()
+    },
+  });
+
   return (
     <div className="mt-auto px-5 py-3">
-      <form noValidate="" className="py-1 border rounded-2">
+      <form className="py-1 border rounded-2" onSubmit={formik.handleSubmit}>
         <div className="input-group has-validation">
           <input
-            name="body"
+            name="text"
+            id="text"
+            type="text"
             aria-label="Новое сообщение"
             placeholder="Введите сообщение..."
             className="border-0 p-0 ps-2 form-control"
+            value={formik.values.text}
+            onChange={formik.handleChange}
           />
-          <button type="submit" disabled="" className="btn btn-group-vertical">
+          <button type="submit" disabled={formik.values.text === ""} className="btn btn-group-vertical">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
