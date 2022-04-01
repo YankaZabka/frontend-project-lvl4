@@ -1,17 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
-const initialState = {};
+const messagesAdapter = createEntityAdapter()
 
 const counterSlice = createSlice({
   name: 'messages',
-  initialState,
+  initialState: messagesAdapter.getInitialState(),
   reducers: {
-    fetchMessage: (state, action) => {
-      state.data = action.payload;
-    },
+    fetchMessages: messagesAdapter.setAll
   },
 });
 
-export const { fetchMessage } = counterSlice.actions;
+export const { fetchMessages } = counterSlice.actions;
 
 export default counterSlice.reducer;

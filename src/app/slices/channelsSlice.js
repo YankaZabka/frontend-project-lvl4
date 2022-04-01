@@ -1,15 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
-const initialState = {};
+const channelsAdapter = createEntityAdapter()
 
 const counterSlice = createSlice({
   name: 'channels',
-  initialState,
+  initialState: channelsAdapter.getInitialState(),
   reducers: {
-    fetchChannelsData: (state, action) => {
-      state.data = action.payload.channels;
-      state.currentChannelId = action.payload.currentChannelId;
-    },
+    fetchChannelsData: channelsAdapter.setAll,
+    fetchCurrentChannelId: channelsAdapter.updateOne
   },
 });
 
