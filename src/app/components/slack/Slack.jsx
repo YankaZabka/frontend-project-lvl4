@@ -1,14 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import axios from 'axios';
 import { batch, useDispatch } from 'react-redux';
 import ChannelsList from './channels/ChannelsList.jsx';
 import MessagesList from './messages/MessagesList.jsx';
 import SlackContainer from './SlackContainer.jsx';
 import { fetchMessages } from '../../slices/messagesSlice.js';
-import { fetchChannels } from '../../slices/channelsSlice.js';
+import { fetchChannels, changeChannel } from '../../slices/channelsSlice.js';
 
 function Slack() {
-  const [channelId, setChannelId] = useState(1)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,11 +22,11 @@ function Slack() {
         },
       });
       const { channels, currentChannelId, messages } = response.data;
-      setChannelId(currentChannelId)
 
       batch(() => {
         dispatch(fetchMessages(messages));
         dispatch(fetchChannels(channels));
+        dispatch(changeChannel(currentChannelId))
       });
     };
 
@@ -37,7 +36,7 @@ function Slack() {
   return (
     <SlackContainer>
 
-      <ChannelsList />
+      <ChannelsList/>
       <MessagesList />
 
     </SlackContainer>
