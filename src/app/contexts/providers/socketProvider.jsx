@@ -3,18 +3,18 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import SocketContext from '../socket.js';
 import { addMessage } from '../../slices/messagesSlice';
+import { addChannel } from '../../slices/channelsSlice';
 
 const socketProvider = ({ children }) => {
   const socket = io();
   const dispatch = useDispatch();
 
   socket.on('newMessage', (msg) => {
-    console.log('msg', msg);
     dispatch(addMessage(msg));
   });
-  // socket.on('newChannel', (channel) => {
-  //     store.dispatch(addChannel({ channel }));
-  // });
+  socket.on('newChannel', (channel) => {
+    dispatch(addChannel(channel));
+  });
   // socket.on('removeChannel', ({ id }) => {
   //     store.dispatch(removeChannel({ id }));
   // });
