@@ -2,6 +2,7 @@ import React from 'react';
 import {
   BrowserRouter, Navigate, Route, Routes, useLocation,
 } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Navbar from './components/Navbar.jsx';
 import Login from './components/Login.jsx';
 import Slack from './components/slack/Slack.jsx';
@@ -10,6 +11,7 @@ import AuthProvider from './contexts/providers/authProvider.jsx';
 import SocketProvider from './contexts/providers/socketProvider.jsx';
 import useAuth from './hooks/useAuth';
 import 'bootstrap';
+import getModal from './components/modals/index.js';
 
 function PrivateRoute({ children }) {
   const auth = useAuth();
@@ -29,7 +31,18 @@ function PublicRoute({ children }) {
   );
 }
 
+const renderModal = (modalType) => {
+  if (!modalType) {
+    return null;
+  }
+
+  const Component = getModal(modalType);
+  return <Component />;
+};
+
 function App() {
+  const modalType = useSelector((state) => state.modals.status);
+
   return (
     <SocketProvider>
       <AuthProvider>
@@ -45,6 +58,7 @@ function App() {
             </Routes>
 
           </div>
+          {renderModal(modalType)}
         </BrowserRouter>
       </AuthProvider>
     </SocketProvider>

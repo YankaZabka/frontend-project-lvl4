@@ -1,7 +1,9 @@
+/* eslint jsx-a11y/no-noninteractive-element-interactions: 0 */
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { changeChannel } from '../../../slices/channelsSlice';
+import { updateStatus } from '../../../slices/modalsSlice';
 
 function ChannelItem({ name, id, removable }) {
   const currentId = useSelector((state) => state.channels.selectedChannel);
@@ -9,6 +11,14 @@ function ChannelItem({ name, id, removable }) {
 
   const onClick = () => {
     dispatch(changeChannel(id));
+  };
+
+  const onRemove = () => {
+    dispatch(updateStatus('removing'));
+  };
+
+  const onRename = () => {
+    dispatch(updateStatus('renaming'));
   };
 
   return (
@@ -32,9 +42,25 @@ function ChannelItem({ name, id, removable }) {
               <span className="visually-hidden">Toggle Dropdown</span>
             </button>
             <ul className="dropdown-menu">
-              <li className="dropdown-item">Удалить</li>
+              <li
+                className="dropdown-item"
+                onClick={onRemove}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') { onRename(); }
+                }}
+              >
+                Удалить
+              </li>
               <li><hr className="dropdown-divider" /></li>
-              <li className="dropdown-item">Переименовать</li>
+              <li
+                className="dropdown-item"
+                onClick={onRename}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') { onRename(); }
+                }}
+              >
+                Переименовать
+              </li>
             </ul>
           </div>
         )

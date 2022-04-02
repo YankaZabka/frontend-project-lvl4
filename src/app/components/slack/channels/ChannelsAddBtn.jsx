@@ -1,8 +1,16 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { updateStatus } from '../../../slices/modalsSlice';
 
 function ChannelsAddBtn() {
+  const dispatch = useDispatch();
+
+  const onClick = () => {
+    dispatch(updateStatus('adding'));
+  };
+
   return (
-    <button className="p-0 text-primary btn btn-group-vertical" type="button">
+    <button className="p-0 text-primary btn btn-group-vertical" type="button" onClick={onClick}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 16 16"
