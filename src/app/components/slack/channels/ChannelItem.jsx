@@ -1,9 +1,9 @@
 /* eslint jsx-a11y/no-noninteractive-element-interactions: 0 */
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, batch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { changeChannel } from '../../../slices/channelsSlice';
-import { updateStatus } from '../../../slices/modalsSlice';
+import { updateItem, updateStatus } from '../../../slices/modalsSlice';
 
 function ChannelItem({ name, id, removable }) {
   const currentId = useSelector((state) => state.channels.selectedChannel);
@@ -14,7 +14,10 @@ function ChannelItem({ name, id, removable }) {
   };
 
   const onRemove = () => {
-    dispatch(updateStatus('removing'));
+    batch(() => {
+      dispatch(updateStatus('removing'));
+      dispatch(updateItem({ name, id }));
+    });
   };
 
   const onRename = () => {

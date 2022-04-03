@@ -13,10 +13,13 @@ const channelsSlice = createSlice({
       state.selectedChannel = action.payload;
     }),
     addChannel: channelsAdapter.addOne,
+    removeChannel: channelsAdapter.removeOne,
   },
 });
 
-export const { fetchChannels, changeChannel, addChannel } = channelsSlice.actions;
+export const {
+  fetchChannels, changeChannel, addChannel, removeChannel,
+} = channelsSlice.actions;
 
 export const selectors = channelsAdapter.getSelectors((state) => state.channels);
 
