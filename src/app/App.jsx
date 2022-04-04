@@ -12,6 +12,7 @@ import SocketProvider from './contexts/providers/socketProvider.jsx';
 import useAuth from './hooks/useAuth';
 import 'bootstrap';
 import getModal from './components/modals/index.js';
+import SignUp from './components/SignUp.jsx';
 
 function PrivateRoute({ children }) {
   const auth = useAuth();
@@ -54,6 +55,7 @@ function App() {
             <Routes>
               <Route exact path="/" element={<PrivateRoute><Slack /></PrivateRoute>} />
               <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+              <Route path="/signup" element={<PublicRoute><SignUp /></PublicRoute>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
 
