@@ -1,11 +1,11 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {useFormik} from 'formik';
-import {FormControl, FormGroup, Modal} from 'react-bootstrap';
-import {useDispatch, useSelector} from 'react-redux';
-import {updateStatus} from '../../slices/modalsSlice.js';
-import useSocket from "../../hooks/useSocket";
-import {renameChannel, selectors} from "../../slices/channelsSlice";
-import * as Yup from "yup";
+import React, { useEffect, useRef, useState } from 'react';
+import { useFormik } from 'formik';
+import { FormControl, FormGroup, Modal } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import * as Yup from 'yup';
+import { updateStatus } from '../../slices/modalsSlice.js';
+import useSocket from '../../hooks/useSocket';
+import { selectors } from '../../slices/channelsSlice';
 
 function Rename() {
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ function Rename() {
         setFieldError('body', 'Канал с таким именем уже существует!');
       } else {
         setIsLoading(true);
-        socket.emit('renameChannel', { id, name: body}, () => {
+        socket.emit('renameChannel', { id, name: body }, () => {
           setIsLoading(false);
           onHide();
         });
