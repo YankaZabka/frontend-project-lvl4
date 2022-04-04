@@ -3,12 +3,10 @@ import { Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateStatus } from '../../slices/modalsSlice.js';
 import useSocket from '../../hooks/useSocket';
-import { changeChannel } from '../../slices/channelsSlice';
 
 function Remove() {
   const dispatch = useDispatch();
   const socket = useSocket();
-  const selectedChannelId = useSelector((state) => state.channels.selectedChannel);
   const { id } = useSelector((state) => state.modals.item);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -19,9 +17,6 @@ function Remove() {
   const onSubmit = () => {
     setIsLoading(true);
     socket.emit('removeChannel', { id }, () => {
-      if (selectedChannelId === id) {
-        dispatch(changeChannel(1));
-      }
       setIsLoading(false);
       onHide();
     });
