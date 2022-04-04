@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import useSocket from '../../../hooks/useSocket';
 
 function MessageForm() {
@@ -14,6 +15,7 @@ function MessageForm() {
   const socket = useSocket();
   const channelId = useSelector((state) => state.channels.selectedChannel);
   const author = JSON.parse(localStorage.getItem('user')).username;
+  const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: {
@@ -39,7 +41,7 @@ function MessageForm() {
             id="text"
             type="text"
             aria-label="Новое сообщение"
-            placeholder="Введите сообщение..."
+            placeholder={t('messages.formPlaceholder')}
             className="border-0 p-0 ps-2 form-control"
             ref={inputEl}
             value={formik.values.text}

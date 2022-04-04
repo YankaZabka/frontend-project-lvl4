@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { updateStatus } from '../../slices/modalsSlice.js';
 import useSocket from '../../hooks/useSocket';
 
 function Remove() {
   const dispatch = useDispatch();
   const socket = useSocket();
+  const { t } = useTranslation();
   const { id } = useSelector((state) => state.modals.item);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -25,14 +27,14 @@ function Remove() {
   return (
     <Modal show centered>
       <Modal.Header closeButton onHide={onHide}>
-        <Modal.Title>Удалить</Modal.Title>
+        <Modal.Title>{t('modals.remove.title')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
-        <p className="lead">Вы уверены?</p>
+        <p className="lead">{t('modals.remove.body')}</p>
         <div className="d-flex justify-content-end">
-          <button type="button" className="me-2 btn btn-secondary" onClick={onHide}>Отменить</button>
-          <button type="submit" className="btn btn-danger" onClick={onSubmit} disabled={isLoading}>Удалить</button>
+          <button type="button" className="me-2 btn btn-secondary" onClick={onHide}>{t('buttons.cancel')}</button>
+          <button type="submit" className="btn btn-danger" onClick={onSubmit} disabled={isLoading}>{t('buttons.remove')}</button>
         </div>
       </Modal.Body>
     </Modal>

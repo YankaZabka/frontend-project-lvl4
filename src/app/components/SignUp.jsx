@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import image from '../assets/signupImg.jpeg';
 import useAuth from '../hooks/useAuth';
 
@@ -11,18 +12,19 @@ function Login() {
 
   const auth = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const SignUpSchema = Yup.object().shape({
     username: Yup.string()
-      .min(3, 'Слишком короткое!')
-      .max(20, 'Слишком длинное!')
-      .required('Обязательное поле'),
+      .min(3, t('signup.errors.usernameMin'))
+      .max(20, t('signup.errors.usernameMax'))
+      .required(t('signup.errors.required')),
     password: Yup.string()
-      .min(6, 'Слишком короткий!')
-      .required('Обязательное поле'),
+      .min(6, t('signup.errors.passwordMin'))
+      .required(t('signup.errors.required')),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password'), null], 'Значения не совпадают')
-      .required('Обязательное поле'),
+      .oneOf([Yup.ref('password'), null], t('signup.errors.confirmPassword'))
+      .required(t('signup.errors.required')),
   });
 
   const formik = useFormik({
@@ -44,7 +46,7 @@ function Login() {
         setIsLoading(false);
         setFieldError('username', 'submit');
         setFieldError('password', 'submit');
-        setFieldError('confirmPassword', 'Пользователь с таким именем уже существует');
+        setFieldError('confirmPassword', t('signup.errors.server'));
       }
     },
   });
@@ -60,7 +62,7 @@ function Login() {
               </div>
               <form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={formik.handleSubmit}>
                 {!isLoading
-                  ? <h1 className="text-center mb-4">Регистрация</h1>
+                  ? <h1 className="text-center mb-4">{t('signup.title')}</h1>
                   : (
                     <div className="d-flex justify-content-center">
                       <div className="spinner-grow text-primary mb-4" role="status">
@@ -72,13 +74,13 @@ function Login() {
                   <input
                     name="username"
                     required
-                    placeholder="Ваш ник"
+                    placeholder={t('signup.username')}
                     id="username"
                     className={`form-control ${formik.errors.username ? 'is-invalid' : null}`}
                     value={formik.values.username}
                     onChange={formik.handleChange}
                   />
-                  <label htmlFor="username">Ваш ник</label>
+                  <label htmlFor="username">{t('signup.username')}</label>
                   {formik.errors.username // eslint-disable-line no-nested-ternary
                     ? formik.errors.username === 'submit'
                       ? null
@@ -90,13 +92,13 @@ function Login() {
                     name="password"
                     type="password"
                     required
-                    placeholder="Пароль"
+                    placeholder={t('signup.password')}
                     id="password"
                     className={`form-control ${formik.errors.password ? 'is-invalid' : null}`}
                     value={formik.values.password}
                     onChange={formik.handleChange}
                   />
-                  <label htmlFor="password" className="form-label">Пароль</label>
+                  <label htmlFor="password" className="form-label">{t('signup.password')}</label>
                   {formik.errors.password // eslint-disable-line no-nested-ternary
                     ? formik.errors.password === 'submit'
                       ? null
@@ -108,13 +110,13 @@ function Login() {
                     name="confirmPassword"
                     type="password"
                     required
-                    placeholder="Пароль"
+                    placeholder={t('signup.confirmPassword')}
                     id="confirmPassword"
                     className={`form-control ${formik.errors.confirmPassword ? 'is-invalid' : null}`}
                     value={formik.values.confirmPassword}
                     onChange={formik.handleChange}
                   />
-                  <label htmlFor="confirmPassword" className="form-label">Подтвердите пароль</label>
+                  <label htmlFor="confirmPassword" className="form-label">{t('signup.confirmPassword')}</label>
                   {formik.errors.confirmPassword
                     ? <div className="invalid-tooltip">{formik.errors.confirmPassword}</div>
                     : null}
@@ -124,7 +126,7 @@ function Login() {
                   className="w-100 mb-3 btn btn-outline-primary"
                   disabled={isLoading}
                 >
-                  Зарегистрироваться
+                  {t('buttons.signup')}
                 </button>
               </form>
             </div>

@@ -3,6 +3,7 @@ import {
   BrowserRouter, Navigate, Route, Routes, useLocation,
 } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { I18nextProvider } from 'react-i18next';
 import Navbar from './components/Navbar.jsx';
 import Login from './components/Login.jsx';
 import Slack from './components/slack/Slack.jsx';
@@ -13,6 +14,7 @@ import useAuth from './hooks/useAuth';
 import 'bootstrap';
 import getModal from './components/modals/index.js';
 import SignUp from './components/SignUp.jsx';
+import i18n from '../locales/initI18next.js';
 
 function PrivateRoute({ children }) {
   const auth = useAuth();
@@ -45,25 +47,27 @@ function App() {
   const modalType = useSelector((state) => state.modals.status);
 
   return (
-    <SocketProvider>
-      <AuthProvider>
-        <BrowserRouter>
+    <I18nextProvider i18n={i18n}>
+      <SocketProvider>
+        <AuthProvider>
+          <BrowserRouter>
 
-          <div className="d-flex flex-column h-100">
+            <div className="d-flex flex-column h-100">
 
-            <Navbar />
-            <Routes>
-              <Route exact path="/" element={<PrivateRoute><Slack /></PrivateRoute>} />
-              <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-              <Route path="/signup" element={<PublicRoute><SignUp /></PublicRoute>} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+              <Navbar />
+              <Routes>
+                <Route exact path="/" element={<PrivateRoute><Slack /></PrivateRoute>} />
+                <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+                <Route path="/signup" element={<PublicRoute><SignUp /></PublicRoute>} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
 
-          </div>
-          {renderModal(modalType)}
-        </BrowserRouter>
-      </AuthProvider>
-    </SocketProvider>
+            </div>
+            {renderModal(modalType)}
+          </BrowserRouter>
+        </AuthProvider>
+      </SocketProvider>
+    </I18nextProvider>
   );
 }
 

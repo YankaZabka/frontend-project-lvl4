@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import { Modal, FormGroup, FormControl } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import { updateStatus } from '../../slices/modalsSlice.js';
 import { changeChannel, selectors } from '../../slices/channelsSlice';
 import useSocket from '../../hooks/useSocket';
@@ -10,6 +11,7 @@ import useSocket from '../../hooks/useSocket';
 function Add() {
   const dispatch = useDispatch();
   const socket = useSocket();
+  const { t } = useTranslation();
   const inputRef = useRef();
   const channelNames = useSelector(selectors.selectAll).map((item) => item.name);
   const [isLoading, setIsLoading] = useState(false);
@@ -23,7 +25,7 @@ function Add() {
   };
 
   const validationSchema = Yup.object().shape({
-    body: Yup.string().required('Обязательное поле'),
+    body: Yup.string().required(t('modals.add.errors.required')),
   });
 
   const formik = useFormik({
@@ -35,7 +37,7 @@ function Add() {
       const isRepeat = channelNames.find((item) => item === body);
 
       if (isRepeat) {
-        setFieldError('body', 'Канал с таким именем уже существует!');
+        setFieldError('body', t('modals.add.errors.repeat'));
       } else {
         setIsLoading(true);
         socket.emit('newChannel', { name: body }, (response) => {
@@ -50,7 +52,7 @@ function Add() {
   return (
     <Modal show centered>
       <Modal.Header closeButton onHide={onHide}>
-        <Modal.Title>Добавить канал</Modal.Title>
+        <Modal.Title>{t('modals.add.title')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -69,8 +71,8 @@ function Add() {
             />
             {formik.errors.body && <div className="invalid-tooltip">{formik.errors.body}</div>}
             <div className="d-flex justify-content-end">
-              <button type="button" className="me-2 btn btn-secondary" onClick={onHide}>Отменить</button>
-              <button type="submit" className="btn btn-primary" disabled={formik.values.body === '' || isLoading}>Создать</button>
+              <button type="button" className="me-2 btn btn-secondary" onClick={onHide}>{t('buttons.cancel')}</button>
+              <button type="submit" className="btn btn-primary" disabled={formik.values.body === '' || isLoading}>{t('buttons.create')}</button>
             </div>
           </FormGroup>
         </form>
