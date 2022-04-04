@@ -13,7 +13,12 @@ const channelsSlice = createSlice({
       state.selectedChannel = action.payload;
     }),
     addChannel: channelsAdapter.addOne,
-    removeChannel: channelsAdapter.removeOne,
+    removeChannel: (state, action) => {
+      if (state.selectedChannel === action.payload) {
+        state.selectedChannel = 1;
+      }
+      return channelsAdapter.removeOne(state, action);
+    },
     renameChannel: channelsAdapter.updateOne,
   },
 });
