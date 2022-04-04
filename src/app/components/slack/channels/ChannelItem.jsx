@@ -21,7 +21,10 @@ function ChannelItem({ name, id, removable }) {
   };
 
   const onRename = () => {
-    dispatch(updateStatus('renaming'));
+    batch(() => {
+      dispatch(updateStatus('renaming'));
+      dispatch(updateItem({ name, id }));
+    });
   };
 
   return (
