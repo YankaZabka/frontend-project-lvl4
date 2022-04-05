@@ -9,6 +9,7 @@ export default {
       cancel: 'Отменить',
       confirm: 'Отправить',
       create: 'Отправить',
+      dropdown: 'Управление каналом',
     },
     login: {
       title: 'Войти',

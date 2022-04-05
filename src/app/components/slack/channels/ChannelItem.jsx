@@ -1,8 +1,8 @@
-/* eslint jsx-a11y/no-noninteractive-element-interactions: 0 */
 import React from 'react';
 import { useDispatch, useSelector, batch } from 'react-redux';
-import { Button, SplitButton, Dropdown } from 'react-bootstrap';
+import { Button, Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { changeChannel } from '../../../slices/channelsSlice';
 import { updateItem, updateStatus } from '../../../slices/modalsSlice';
 
@@ -33,16 +33,21 @@ function ChannelItem({ name, id, removable }) {
     <li className="nav-item w-100">
       {removable
         ? (
-          <SplitButton
-            variant={currentId === id ? 'secondary' : ''}
-            title={`# ${name}`}
-            id="segmented-button-dropdown-1"
-            className="d-flex"
-            onClick={onClick}
-          >
-            <Dropdown.Item onClick={onRemove}>{t('buttons.remove')}</Dropdown.Item>
-            <Dropdown.Item onClick={onRename}>{t('buttons.rename')}</Dropdown.Item>
-          </SplitButton>
+          <Dropdown as={ButtonGroup} className="d-flex">
+            <Button onClick={onClick} variant={currentId === id ? 'secondary' : ''}>
+              <span className="mr-1">#</span>
+              {name}
+            </Button>
+
+            <Dropdown.Toggle role="button" split variant={currentId === id ? 'secondary' : ''} id="dropdown-split-basic">
+              <span className="d-none">{t('buttons.dropdown')}</span>
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={onRemove}>{t('buttons.remove')}</Dropdown.Item>
+              <Dropdown.Item onClick={onRename}>{t('buttons.rename')}</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         )
         : (
           <div className="d-grid gap-2">
