@@ -72,7 +72,9 @@ function Add() {
               data-testid="input-body"
               name="body"
               className={`mb-3 ${formik.errors.body && 'is-invalid'}`}
+              id="name"
             />
+            <label className="visually-hidden" htmlFor="name">Имя канала</label>
             {formik.errors.body && <div className="invalid-tooltip">{formik.errors.body}</div>}
             <div className="d-flex justify-content-end">
               <button type="button" className="me-2 btn btn-secondary" onClick={onHide}>{t('buttons.cancel')}</button>
