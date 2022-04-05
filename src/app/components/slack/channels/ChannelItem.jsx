@@ -1,4 +1,5 @@
 /* eslint jsx-a11y/no-noninteractive-element-interactions: 0 */
+/* eslint jsx-a11y/no-noninteractive-element-to-interactive-role: 0 */
 import React from 'react';
 import { useDispatch, useSelector, batch } from 'react-redux';
 import { Button } from 'react-bootstrap';
@@ -51,6 +52,7 @@ function ChannelItem({ name, id, removable }) {
               <li
                 className="dropdown-item"
                 onClick={onRemove}
+                role="button"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') { onRename(); }
                 }}
@@ -61,6 +63,7 @@ function ChannelItem({ name, id, removable }) {
               <li
                 className="dropdown-item"
                 onClick={onRename}
+                role="button"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') { onRename(); }
                 }}
