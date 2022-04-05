@@ -5,9 +5,9 @@ export default {
       login: 'Войти',
       signup: 'Зарегистрироваться',
       remove: 'Удалить',
-      rename: 'Отправить',
+      rename: 'Переименовать',
       cancel: 'Отменить',
-      confirm: 'Подтвердить',
+      confirm: 'Отправить',
       create: 'Отправить',
     },
     login: {

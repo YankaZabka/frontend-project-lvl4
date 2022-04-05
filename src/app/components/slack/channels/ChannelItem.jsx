@@ -1,14 +1,15 @@
 /* eslint jsx-a11y/no-noninteractive-element-interactions: 0 */
-/* eslint jsx-a11y/no-noninteractive-element-to-interactive-role: 0 */
 import React from 'react';
 import { useDispatch, useSelector, batch } from 'react-redux';
-import { Button } from 'react-bootstrap';
+import { Button, SplitButton, Dropdown } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { changeChannel } from '../../../slices/channelsSlice';
 import { updateItem, updateStatus } from '../../../slices/modalsSlice';
 
 function ChannelItem({ name, id, removable }) {
   const currentId = useSelector((state) => state.channels.selectedChannel);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const onClick = () => {
     dispatch(changeChannel(id));
@@ -32,46 +33,16 @@ function ChannelItem({ name, id, removable }) {
     <li className="nav-item w-100">
       {removable
         ? (
-          <div className="btn-group d-flex">
-            <button
-              type="button"
-              className={`btn ${currentId === id ? 'btn-secondary' : ''}`}
-              onClick={onClick}
-            >
-              {`# ${name}`}
-            </button>
-            <button
-              type="button"
-              className={`btn ${currentId === id ? 'btn-secondary' : ''} dropdown-toggle dropdown-toggle-split`}
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <span className="visually-hidden">Toggle Dropdown</span>
-            </button>
-            <ul className="dropdown-menu">
-              <li
-                className="dropdown-item"
-                onClick={onRemove}
-                role="button"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') { onRename(); }
-                }}
-              >
-                Удалить
-              </li>
-              <li><hr className="dropdown-divider" /></li>
-              <li
-                className="dropdown-item"
-                onClick={onRename}
-                role="button"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') { onRename(); }
-                }}
-              >
-                Переименовать
-              </li>
-            </ul>
-          </div>
+          <SplitButton
+            variant={currentId === id ? 'secondary' : ''}
+            title={`# ${name}`}
+            id="segmented-button-dropdown-1"
+            className="d-flex"
+            onClick={onClick}
+          >
+            <Dropdown.Item onClick={onRemove}>{t('buttons.remove')}</Dropdown.Item>
+            <Dropdown.Item onClick={onRename}>{t('buttons.rename')}</Dropdown.Item>
+          </SplitButton>
         )
         : (
           <div className="d-grid gap-2">

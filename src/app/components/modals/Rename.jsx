@@ -75,7 +75,7 @@ function Rename() {
             {formik.errors.body && <div className="invalid-tooltip">{formik.errors.body}</div>}
             <div className="d-flex justify-content-end">
               <button type="button" className="me-2 btn btn-secondary" onClick={onHide}>{t('buttons.cancel')}</button>
-              <button type="submit" className="btn btn-primary" disabled={formik.values.body === '' || isLoading}>{t('buttons.rename')}</button>
+              <button type="submit" className="btn btn-primary" disabled={formik.values.body === '' || isLoading}>{t('buttons.confirm')}</button>
             </div>
           </FormGroup>
         </form>
