@@ -5,10 +5,10 @@ export default {
       login: 'Войти',
       signup: 'Зарегистрироваться',
       remove: 'Удалить',
-      rename: 'Переименовать',
+      rename: 'Отправить',
       cancel: 'Отменить',
       confirm: 'Подтвердить',
-      create: 'Создать',
+      create: 'Отправить',
     },
     login: {
       title: 'Войти',
@@ -23,16 +23,15 @@ export default {
     },
     signup: {
       title: 'Регистрация',
-      username: 'Ваш ник',
+      username: 'Имя пользователя',
       password: 'Пароль',
       confirmPassword: 'Подтвердите пароль',
       errors: {
         required: 'Обязательное поле',
         server: 'Пользователь с таким именем уже существует!',
-        usernameMin: 'Слишком короткое!',
-        usernameMax: 'Слишком длинное!',
-        passwordMin: 'Слишком короткий!',
-        confirmPassword: 'Значения не совпадают',
+        username: 'От 3 до 20 символов',
+        password: 'Не менее 6 символов',
+        confirmPassword: 'Пароли должны совпадать',
       },
     },
     modals: {
@@ -68,6 +67,7 @@ export default {
       title: 'Каналы',
     },
     notify: {
+      error: 'Ошибка соединения',
       add: 'Канал успешно создан!',
       remove: 'Канал успешно удален!',
       rename: 'Канал успешно переименован!',

@@ -17,11 +17,11 @@ function Login() {
 
   const SignUpSchema = Yup.object().shape({
     username: Yup.string()
-      .min(3, t('signup.errors.usernameMin'))
-      .max(20, t('signup.errors.usernameMax'))
+      .min(3, t('signup.errors.username'))
+      .max(20, t('signup.errors.username'))
       .required(t('signup.errors.required')),
     password: Yup.string()
-      .min(6, t('signup.errors.passwordMin'))
+      .min(6, t('signup.errors.password'))
       .required(t('signup.errors.required')),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password'), null], t('signup.errors.confirmPassword'))
@@ -44,7 +44,7 @@ function Login() {
         auth.logIn();
         navigate('/', { replace: true });
       } catch {
-        notifyError(t('signup.errors.server'));
+        notifyError(t('notify.error'));
         setIsLoading(false);
         setFieldError('username', 'submit');
         setFieldError('password', 'submit');

@@ -36,7 +36,7 @@ function Login() {
         auth.logIn();
         navigate('/', { replace: true });
       } catch {
-        notifyError(t('login.errors.server'));
+        notifyError(t('notify.error'));
         setIsLoading(false);
         setFieldError('username', 'submit');
         setFieldError('password', t('login.errors.server'));
