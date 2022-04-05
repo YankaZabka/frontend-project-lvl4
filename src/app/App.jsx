@@ -4,6 +4,7 @@ import {
 } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
+import { ToastContainer } from 'react-toastify';
 import Navbar from './components/Navbar.jsx';
 import Login from './components/Login.jsx';
 import Slack from './components/slack/Slack.jsx';
@@ -12,6 +13,7 @@ import AuthProvider from './contexts/providers/authProvider.jsx';
 import SocketProvider from './contexts/providers/socketProvider.jsx';
 import useAuth from './hooks/useAuth';
 import 'bootstrap';
+import 'react-toastify/dist/ReactToastify.css';
 import getModal from './components/modals/index.js';
 import SignUp from './components/SignUp.jsx';
 import i18n from '../locales/initI18next.js';
@@ -51,6 +53,18 @@ function App() {
       <SocketProvider>
         <AuthProvider>
           <BrowserRouter>
+
+            <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
 
             <div className="d-flex flex-column h-100">
 

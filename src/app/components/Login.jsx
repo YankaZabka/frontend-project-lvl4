@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import image from '../assets/loginImg.jpeg';
 import useAuth from '../hooks/useAuth';
+import { notifyError } from '../../notify';
 
 function Login() {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,6 +36,7 @@ function Login() {
         auth.logIn();
         navigate('/', { replace: true });
       } catch {
+        notifyError(t('login.errors.server'));
         setIsLoading(false);
         setFieldError('username', 'submit');
         setFieldError('password', t('login.errors.server'));
@@ -109,6 +111,7 @@ function Login() {
                 <Link to="/signup">{t('login.link')}</Link>
               </div>
             </div>
+
           </div>
         </div>
       </div>

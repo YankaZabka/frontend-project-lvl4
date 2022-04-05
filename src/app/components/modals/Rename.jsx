@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { updateStatus } from '../../slices/modalsSlice.js';
 import useSocket from '../../hooks/useSocket';
 import { selectors } from '../../slices/channelsSlice';
+import { notifySuccess } from '../../../notify';
 
 function Rename() {
   const dispatch = useDispatch();
@@ -41,7 +42,10 @@ function Rename() {
         setFieldError('body', t('modals.rename.errors.repeat'));
       } else {
         setIsLoading(true);
-        socket.emit('renameChannel', { id, name: body }, () => {
+        socket.emit('renameChannel', { id, name: body }, (response) => {
+          if (response.status === 'ok') {
+            notifySuccess(t('notify.rename'));
+          }
           setIsLoading(false);
           onHide();
         });

@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { updateStatus } from '../../slices/modalsSlice.js';
 import { changeChannel, selectors } from '../../slices/channelsSlice';
 import useSocket from '../../hooks/useSocket';
+import { notifySuccess } from '../../../notify';
 
 function Add() {
   const dispatch = useDispatch();
@@ -41,6 +42,9 @@ function Add() {
       } else {
         setIsLoading(true);
         socket.emit('newChannel', { name: body }, (response) => {
+          if (response.status === 'ok') {
+            notifySuccess(t('notify.add'));
+          }
           setIsLoading(false);
           onHide();
           dispatch(changeChannel(response.data.id));

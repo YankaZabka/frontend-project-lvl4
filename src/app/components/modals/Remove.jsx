@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { updateStatus } from '../../slices/modalsSlice.js';
 import useSocket from '../../hooks/useSocket';
+import { notifySuccess } from '../../../notify';
 
 function Remove() {
   const dispatch = useDispatch();
@@ -18,7 +19,10 @@ function Remove() {
 
   const onSubmit = () => {
     setIsLoading(true);
-    socket.emit('removeChannel', { id }, () => {
+    socket.emit('removeChannel', { id }, (response) => {
+      if (response.status === 'ok') {
+        notifySuccess(t('notify.remove'));
+      }
       setIsLoading(false);
       onHide();
     });
