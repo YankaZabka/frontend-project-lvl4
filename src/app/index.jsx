@@ -1,10 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './App.jsx';
 import store from './slices/index.js';
 
-export default () => {
+const init = async () => {
   const bodyEl = document.querySelector('body');
   bodyEl.classList.add('bg-light');
   bodyEl.innerHTML = '';
@@ -33,10 +32,11 @@ export default () => {
 
   document.head.appendChild(roolbarScript);
 
-  ReactDOM.render(
+  return (
     <Provider store={store}>
       <App />
-    </Provider>,
-    container,
+    </Provider>
   );
 };
+
+export default init

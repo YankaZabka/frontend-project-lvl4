@@ -1,13 +1,20 @@
 // @ts-check
-import init from './app/index.jsx';
-
+import ReactDOM from 'react-dom';
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
 
 import '../assets/application.scss';
+import init from './app/index.jsx';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-init();
+const render = async () => {
+  const vDom = await init();
+  ReactDOM.render(
+      vDom, document.getElementById('chat'),
+  );
+};
+
+render();
