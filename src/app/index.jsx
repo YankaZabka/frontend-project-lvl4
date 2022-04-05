@@ -39,4 +39,4 @@ const init = async () => {
   );
 };
 
-export default init
+export default init;

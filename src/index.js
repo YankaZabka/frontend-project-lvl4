@@ -12,9 +12,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const render = async () => {
   const vDom = await init();
-  ReactDOM.render(
-      vDom, document.getElementById('chat'),
-  );
+  ReactDOM.render(vDom, document.getElementById('chat'));
 };
 
 render();
