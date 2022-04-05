@@ -1,3 +1,4 @@
+/* eslint react-hooks/rules-of-hooks: 0 */
 import React, { useEffect, useState } from 'react';
 import AuthContext from '../auth.js';
 
@@ -8,7 +9,7 @@ const authProvider = ({ children }) => {
     if (localStorage.getItem('user')) {
       setLoggedIn(true);
     }
-  });
+  }, []);
 
   const logIn = () => setLoggedIn(true);
   const logOut = () => {

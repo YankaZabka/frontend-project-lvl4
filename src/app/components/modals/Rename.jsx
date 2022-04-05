@@ -1,3 +1,4 @@
+/* eslint jsx-a11y/label-has-associated-control: 0 */
 import React, { useEffect, useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import { FormControl, FormGroup, Modal } from 'react-bootstrap';

@@ -31,7 +31,7 @@ function Slack() {
     };
 
     fetch();
-  }, []);
+  }, [dispatch]);
 
   return (
     <SlackContainer>
