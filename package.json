@@ -2,7 +2,7 @@
   "name": "@hexlet/code",
   "version": "0.0.1",
   "description": "",
-  "main": "src/app/index.js",
+  "main": "src/app/index.jsx",
   "type": "module",
   "scripts": {
     "test": "jest",
